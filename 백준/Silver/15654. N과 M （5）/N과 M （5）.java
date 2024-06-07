@@ -6,23 +6,23 @@ import java.util.StringTokenizer;
 
 public class Main {
 	static int n, m;
-	static int[] arr, result;
+	static int[] nums, arr;
 	static boolean[] visited;
 	static StringBuilder sb = new StringBuilder();
 
 	static void dfs(int depth) {
 		if (depth == m) {
-			for (int x : result) {
-				sb.append(x).append(" ");
+			for (int x : arr) {
+				sb.append(x).append(' ');
 			}
-			sb.append("\n");
+			sb.append('\n');
 			return;
 		}
 
 		for (int i = 0; i < n; i++) {
 			if (!visited[i]) {
 				visited[i] = true;
-				result[depth] = arr[i];
+				arr[depth] = nums[i];
 				dfs(depth + 1);
 				visited[i] = false;
 			}
@@ -34,14 +34,14 @@ public class Main {
 		StringTokenizer st = new StringTokenizer(br.readLine());
 		n = Integer.parseInt(st.nextToken());
 		m = Integer.parseInt(st.nextToken());
-		arr = new int[n];
-		result = new int[m];
+		nums = new int[n];
+		arr = new int[m];
 		visited = new boolean[n];
 		st = new StringTokenizer(br.readLine());
 		for (int i = 0; i < n; i++) {
-			arr[i] = Integer.parseInt(st.nextToken());
+			nums[i] = Integer.parseInt(st.nextToken());
 		}
-		Arrays.sort(arr);
+		Arrays.sort(nums);
 		dfs(0);
 		System.out.println(sb);
 	}
