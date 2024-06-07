@@ -11,17 +11,17 @@ public class Main {
 
 	static void dfs(int depth) {
 		if (depth == m) {
-			for (int x : arr) {
-				sb.append(x).append(" ");
+			for (int val : arr) {
+				sb.append(val).append(' ');
 			}
-			sb.append("\n");
+			sb.append('\n');
 			return;
 		}
-
-		for (int i = 0; i < n; i++) {
+		
+		for (int i = 1; i <= n; i++) {
 			if (!visited[i]) {
 				visited[i] = true;
-				arr[depth] = i + 1;
+				arr[depth] = i;
 				dfs(depth + 1);
 				visited[i] = false;
 			}
@@ -34,7 +34,7 @@ public class Main {
 		n = Integer.parseInt(st.nextToken());
 		m = Integer.parseInt(st.nextToken());
 		arr = new int[m];
-		visited = new boolean[n];
+		visited = new boolean[n + 1];
 		dfs(0);
 		System.out.println(sb);
 	}
