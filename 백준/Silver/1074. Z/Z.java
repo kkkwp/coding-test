@@ -4,24 +4,17 @@ import java.io.InputStreamReader;
 import java.util.StringTokenizer;
 
 public class Main {
-	static int answer;
-
-	static void recur(int size, int r, int c) {
-		if (size == 1)
-			return;
-
-		if (r < size / 2 && c < size / 2) {
-			recur(size / 2, r, c);
-		} else if (r < size / 2 && c >= size / 2) {
-			answer += size * size / 4;
-			recur(size / 2, r, c - size / 2);
-		} else if (r >= size / 2 && c < size / 2) {
-			answer += size * size / 4 * 2;
-			recur(size / 2, r - size / 2, c);
-		} else {
-			answer += size * size / 4 * 3;
-			recur(size / 2, r - size / 2, c - size / 2);
-		}
+	static int z(int n, int r, int c) {
+		if (n == 0)
+			return 0;
+		int half = 1 << (n - 1);
+		if (r < half && c < half)
+			return z(n - 1, r, c);
+		if (r < half && c >= half)
+			return half * half + z(n - 1, r, c - half);
+		if (r >= half && c < half)
+			return 2 * half * half + z(n - 1, r - half, c);
+		return 3 * half * half + z(n - 1, r - half, c - half);
 	}
 
 	public static void main(String[] args) throws IOException {
@@ -30,8 +23,6 @@ public class Main {
 		int n = Integer.parseInt(st.nextToken());
 		int r = Integer.parseInt(st.nextToken());
 		int c = Integer.parseInt(st.nextToken());
-		int size = (int)Math.pow(2, n);
-		recur(size, r, c);
-		System.out.println(answer);
+		System.out.println(z(n, r, c));
 	}
 }
