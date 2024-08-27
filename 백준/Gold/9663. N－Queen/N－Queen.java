@@ -5,40 +5,32 @@ import java.io.InputStreamReader;
 public class Main {
 	static int n;
 	static int cnt;
-	static int[] board;
-
-	static boolean possible(int col) {
-		for (int i = 0; i < col; i++) {
-			// 행
-			if (board[i] == board[col]) {
-				return false;
-			}
-			// 대각선
-			if (Math.abs(col - i) == Math.abs(board[col] - board[i])) {
-				return false;
-			}
-		}
-		return true;
-	}
+	static boolean[] col, right, left;
 
 	static void dfs(int depth) {
 		if (depth == n) {
 			cnt++;
 			return;
 		}
-
 		for (int i = 0; i < n; i++) {
-			board[depth] = i;
-			if (possible(depth)) {
-				dfs(depth + 1);
-			}
+			if (col[i] || right[depth + i] || left[depth - i + n - 1])
+				continue;
+			col[i] = true;
+			right[depth + i] = true;
+			left[depth - i + n - 1] = true;
+			dfs(depth + 1);
+			col[i] = false;
+			right[depth + i] = false;
+			left[depth - i + n - 1] = false;
 		}
 	}
 
 	public static void main(String[] args) throws IOException {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		n = Integer.parseInt(br.readLine());
-		board = new int[n];
+		col = new boolean[n];
+		right = new boolean[2 * n];
+		left = new boolean[2 * n];
 		dfs(0);
 		System.out.println(cnt);
 	}
