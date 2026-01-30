@@ -1,0 +1,40 @@
+import java.io.*;
+import java.util.*;
+
+class Main {
+	public static void main(String[] args) throws Exception {
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		int n = Integer.parseInt(br.readLine()); // 햄버거에 들어가는 재료의 개수
+		int[] k = new int[n]; // 재료의 맛의 정도
+		
+		StringTokenizer st = new StringTokenizer(br.readLine());
+		int maxIdx = 0;
+		for (int i=0; i<n; i++) {
+			k[i] = Integer.parseInt(st.nextToken());
+			if (k[maxIdx] < k[i])
+				maxIdx = i;
+		}
+
+		// 왼쪽 체크
+		for (int i=maxIdx; i>0; i--) {
+			if (k[i] < k[i-1]) {
+				System.out.println(0);
+				return;
+			}
+		}
+
+		// 오른쪽 체크
+		for (int i=maxIdx; i<n-1; i++) {
+			if (k[i] < k[i+1]) {
+				System.out.println(0);
+				return;
+			}
+		}
+
+		// 합계 계산
+		int sum = 0;
+		for (int x : k)
+			sum += x;
+		System.out.println(sum);
+	}
+}
